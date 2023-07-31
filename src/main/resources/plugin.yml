@@ -1,0 +1,5 @@
+name: SoulSQL
+version: '${version}'
+main: com.whitesoul.soulsql.SoulSQL
+authors: [白魂]
+description: 一个Mysql简单类库
