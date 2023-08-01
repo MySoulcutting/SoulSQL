@@ -1,9 +1,6 @@
 package com.whitesoul.soulsql.database;
 
-import com.whitesoul.soulsql.SoulSQL;
 import com.whitesoul.soulsql.util.Logger;
-import org.bukkit.Bukkit;
-import org.bukkit.scheduler.BukkitScheduler;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -35,8 +32,6 @@ public class SQL {
 
     // 使用PreparedStatement插入数据
     public static void insert(String tableName, String[] columns, String[] values) {
-        BukkitScheduler bukkitScheduler = Bukkit.getScheduler();
-        bukkitScheduler.runTaskAsynchronously(SoulSQL.INSTANCE, () -> {
             StringBuilder sql = new StringBuilder("INSERT INTO " + tableName + "(");
             for (String column : columns) {
                 sql.append(column).append(",");
@@ -55,7 +50,6 @@ public class SQL {
                 e.printStackTrace();
                 Logger.error("数据插入失败");
             }
-        });
     }
 
     // 查询数据
@@ -68,8 +62,6 @@ public class SQL {
     }
     // 使用PreparedStatement更新数据
     public static void update(String column, String columnValue, String tableName, String where, String whereValue) {
-        BukkitScheduler bukkitScheduler = Bukkit.getScheduler();
-        bukkitScheduler.runTaskAsynchronously(SoulSQL.INSTANCE, () -> {
                 try {
                     String sql = "UPDATE " + tableName + " SET " + column + " = ? WHERE "+ where +" = ?";
                     ps = Mysql.getConnection().prepareStatement(sql);
@@ -80,12 +72,11 @@ public class SQL {
                     e.printStackTrace();
                     Logger.error("数据更新失败");
                 }
-        });
+
     }
     // 使用PreparedStatement删除数据
     public static void delete(String tableName, String column, String columnValue) {
-        BukkitScheduler bukkitScheduler = Bukkit.getScheduler();
-        bukkitScheduler.runTaskAsynchronously(SoulSQL.INSTANCE, () -> {
+
             String sql = "DELETE FROM " + tableName + " WHERE " + column + " = ?";
             try {
                 ps = Mysql.getConnection().prepareStatement(sql);
@@ -95,6 +86,5 @@ public class SQL {
                 e.printStackTrace();
                 Logger.error("数据删除失败");
             }
-        });
     }
 }
