@@ -12,7 +12,7 @@ public final class SoulSQL extends JavaPlugin {
         INSTANCE = this;
         Logger.info("SoulSQL插件已加载-By:WhiteSoul");
         Logger.info("欢迎您的使用!");
-        Logger.info("当前版本:1.0.0");
+        Logger.info("当前版本:1.0.1");
 
     }
 

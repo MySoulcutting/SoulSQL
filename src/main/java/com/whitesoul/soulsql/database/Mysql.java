@@ -5,26 +5,27 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.bukkit.plugin.Plugin;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class Mysql {
     private static HikariConfig config;
-    // 数据库连接池
-    public static void createConfig(String name, Plugin plugin){
-        try {
+    private static File file;
 
-            if (!plugin.getDataFolder().exists()) {
-                Logger.info("数据库配置文件已创建");
-                plugin.saveResource(name + ".properties", false);
-            } else {
-                Logger.info("数据库配置文件加载成功");
-            }
-            config = new HikariConfig(plugin.getDataFolder() + "\\" + name + ".properties");
-        }catch (Exception e){
-            e.printStackTrace();
+    // 数据库连接池
+    public static void createConfig(String name, Plugin plugin) {
+
+        file = new File(plugin.getDataFolder(), name + ".properties.yml");
+        if (!file.exists()) {
+            Logger.info("数据库配置文件已创建");
+            plugin.saveResource(name + ".properties", false);
+        } else {
+            Logger.info("数据库配置文件加载成功");
         }
+        config = new HikariConfig(plugin.getDataFolder() + "\\" + name + ".properties");
     }
+
     // 获取数据库连接
     public static Connection getConnection() throws SQLException {
         return new HikariDataSource(config).getConnection();
